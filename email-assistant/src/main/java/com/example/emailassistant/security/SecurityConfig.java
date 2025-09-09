@@ -36,7 +36,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/css/**", "/js/**", "/images/**", "/signup", "/login", "/h2-console/**").permitAll()
+                        .requestMatchers("/css/**", "/js/**", "/images/**", "/signup", "/login").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
@@ -46,7 +46,6 @@ public class SecurityConfig {
                         .permitAll()
                 )
                 .logout(logout -> logout.logoutSuccessUrl("/login?logout").permitAll())
-                .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
                 .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()))
                 .httpBasic(Customizer.withDefaults());
         return http.build();
