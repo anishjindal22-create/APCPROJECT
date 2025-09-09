@@ -31,7 +31,7 @@ public class GeminiService {
             throw new IllegalStateException("GEMINI_API_KEY is not configured");
         }
 
-        String url = baseUrl + "/models/" + model + ":generateContent?key=" + apiKey;
+        String url = baseUrl + "/models/" + model + ":generateContent";
 
         Map<String, Object> requestBody = new HashMap<>();
         Map<String, Object> part = new HashMap<>();
@@ -42,6 +42,7 @@ public class GeminiService {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.add("x-goog-api-key", apiKey);
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(requestBody, headers);
 
         try {
