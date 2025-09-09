@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -64,10 +65,12 @@ public class DashboardController {
     }
 
     @PostMapping("/delete")
+    @Transactional
     public String delete(@AuthenticationPrincipal UserDetails principal,
-                         @RequestParam("subject") String subject) {
+                         @RequestParam("subject") @NotBlank String subject) {
         User user = userRepository.findByEmail(principal.getUsername()).orElseThrow();
-        responseEmailRepository.deleteByUserAndSubject(user, subject);
+        responseEmailRepository.findByUserAndSubject(user, subject)
+                .ifPresent(responseEmailRepository::delete);
         return "redirect:/";
     }
 
