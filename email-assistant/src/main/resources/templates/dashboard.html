@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        body {font-family: system-ui, sans-serif; margin: 0; padding: 0; background: #f7f7fb;}
+        header {display:flex; align-items:center; justify-content:space-between; padding: 1rem 1.25rem; background:#fff; border-bottom:1px solid #eee;}
+        header a {text-decoration:none; color:#4f46e5;}
+        .container {max-width: 960px; margin: 2rem auto; padding: 0 1rem;}
+        .card {background: #fff; padding: 1rem; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.06); margin-bottom: 1rem;}
+        textarea {width: 100%; min-height: 160px; padding: .75rem; border-radius: 8px; border: 1px solid #ddd;}
+        input[type="text"] {width: 100%; padding: .65rem; border-radius: 8px; border: 1px solid #ddd;}
+        button {padding: .6rem 1rem; background: #4f46e5; color: white; border: none; border-radius: 10px; cursor: pointer;}
+        .row {display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;}
+        .list {width: 100%; border-collapse: collapse;}
+        .list th, .list td {padding: .6rem; border-bottom: 1px solid #eee;}
+        .muted {opacity: .7;}
+        @media (max-width: 800px) { .row {grid-template-columns: 1fr;} }
+    </style>
+</head>
+<body>
+    <header>
+        <div><strong>Email Assistant</strong></div>
+        <nav>
+            <a th:href="@{/admin/users}">Admin</a>
+            &nbsp;|&nbsp;
+            <form method="post" th:action="@{/logout}" style="display:inline">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <button type="submit" style="background:transparent; color:#4f46e5; padding:0;">Logout</button>
+            </form>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h2 style="margin-top:0">Generate response</h2>
+            <form method="post" th:action="@{/generate}">
+                <label>Incoming email text</label>
+                <textarea name="inputEmail" placeholder="Paste the email you received..." required th:text="${inputEmail}"></textarea>
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <div style="margin-top:.5rem"><button type="submit">Generate</button></div>
+            </form>
+        </div>
+
+        <div class="row">
+            <div class="card">
+                <h3 style="margin-top:0">Generated reply</h3>
+                <form method="post" th:action="@{/save}">
+                    <label>Subject (key)</label>
+                    <input type="text" name="subject" placeholder="e.g. Project Update Reply" required />
+                    <label style="margin-top:.5rem;">Reply content</label>
+                    <textarea name="generated" th:text="${generated}"></textarea>
+                    <input type="hidden" name="inputEmail" th:value="${inputEmail}" />
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                    <div style="margin-top:.5rem"><button type="submit">Save</button></div>
+                </form>
+                <p class="muted" th:if="${generated == null}">No reply yet — generate one above.</p>
+            </div>
+
+            <div class="card">
+                <h3 style="margin-top:0">Saved replies</h3>
+                <table class="list">
+                    <thead><tr><th>Subject</th><th>Actions</th></tr></thead>
+                    <tbody>
+                    <tr th:each="item : ${responses}">
+                        <td th:text="${item.subject}"></td>
+                        <td>
+                            <a th:href="@{|/load?subject=${item.subject}|}" style="margin-right:.5rem;">Load</a>
+                            <form method="post" th:action="@{/delete}" style="display:inline">
+                                <input type="hidden" name="subject" th:value="${item.subject}" />
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                <button type="submit" style="background:#dc2626">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
