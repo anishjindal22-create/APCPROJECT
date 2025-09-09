@@ -1,0 +1,15 @@
+com/example/app/email/EmailController$GenerateForm.class
+com/example/app/auth/AuthController.class
+com/example/app/EmailReplyAppApplication.class
+com/example/app/admin/AdminController.class
+com/example/app/email/EmailGeneratorService.class
+com/example/app/email/EmailResponse$EmailResponseBuilder.class
+com/example/app/auth/AuthController$SignupForm.class
+com/example/app/user/User$UserBuilder.class
+com/example/app/email/EmailResponse.class
+com/example/app/user/User.class
+com/example/app/email/EmailController.class
+com/example/app/BootstrapData.class
+com/example/app/email/EmailResponseRepository.class
+com/example/app/user/UserRepository.class
+com/example/app/security/SecurityConfig.class

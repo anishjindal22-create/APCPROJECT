@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" />
+	<title th:text="${email.subject}">View</title>
+	<link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+	<header>
+		<h1 th:text="${email.subject}">Subject</h1>
+		<nav>
+			<a th:href="@{/}">Home</a>
+			<a th:href="@{/logout}">Logout</a>
+		</nav>
+	</header>
+	<pre th:text="${email.body}"></pre>
+</body>
+</html>

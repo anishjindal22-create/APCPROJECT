@@ -1,0 +1,11 @@
+/workspace/email-reply-app/src/main/java/com/example/app/BootstrapData.java
+/workspace/email-reply-app/src/main/java/com/example/app/EmailReplyAppApplication.java
+/workspace/email-reply-app/src/main/java/com/example/app/admin/AdminController.java
+/workspace/email-reply-app/src/main/java/com/example/app/auth/AuthController.java
+/workspace/email-reply-app/src/main/java/com/example/app/email/EmailController.java
+/workspace/email-reply-app/src/main/java/com/example/app/email/EmailGeneratorService.java
+/workspace/email-reply-app/src/main/java/com/example/app/email/EmailResponse.java
+/workspace/email-reply-app/src/main/java/com/example/app/email/EmailResponseRepository.java
+/workspace/email-reply-app/src/main/java/com/example/app/security/SecurityConfig.java
+/workspace/email-reply-app/src/main/java/com/example/app/user/User.java
+/workspace/email-reply-app/src/main/java/com/example/app/user/UserRepository.java

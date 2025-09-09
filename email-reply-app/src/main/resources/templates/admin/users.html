@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" />
+	<title>Admin - Users</title>
+	<link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+	<header>
+		<h1>Admin - Users</h1>
+		<nav>
+			<a th:href="@{/}">Home</a>
+			<a th:href="@{/logout}">Logout</a>
+		</nav>
+	</header>
+
+	<table>
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Username</th>
+				<th>Email</th>
+				<th>Roles</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="u : ${users}">
+				<td th:text="${u.id}"></td>
+				<td th:text="${u.username}"></td>
+				<td th:text="${u.email}"></td>
+				<td th:text="${#strings.arrayJoin(u.roles.toArray(), ', ')}"></td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>

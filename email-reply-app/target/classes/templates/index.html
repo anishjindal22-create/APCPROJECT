@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" />
+	<title>Email Reply Generator</title>
+	<link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+	<header>
+		<h1>Email Reply Generator</h1>
+		<nav>
+			<a th:href="@{/}">Home</a>
+			<a th:href="@{/admin/users}">Admin</a>
+			<a th:href="@{/logout}">Logout</a>
+		</nav>
+	</header>
+
+	<section>
+		<h2>Generate reply</h2>
+		<form th:action="@{/generate}" th:object="${generateForm}" method="post">
+			<div>
+				<label>Paste incoming email</label>
+				<textarea rows="8" cols="80" th:field="*{incomingEmail}"></textarea>
+				<span th:if="${#fields.hasErrors('incomingEmail')}" th:errors="*{incomingEmail}"></span>
+			</div>
+			<div>
+				<button type="submit">Generate</button>
+			</div>
+		</form>
+	</section>
+
+	<section th:if="${generatedReply}">
+		<h2>Generated reply</h2>
+		<form th:action="@{/save}" method="post">
+			<div>
+				<label>Subject</label>
+				<input type="text" name="subject" placeholder="Subject key" required />
+			</div>
+			<div>
+				<label>Body</label>
+				<textarea rows="10" cols="80" name="body" th:text="${generatedReply}"></textarea>
+			</div>
+			<div>
+				<button type="submit">Save</button>
+			</div>
+		</form>
+	</section>
+
+	<section>
+		<h2>Saved responses</h2>
+		<div th:if="${#lists.isEmpty(emails)}">No saved responses yet.</div>
+		<table th:if="${!#lists.isEmpty(emails)}">
+			<thead>
+				<tr>
+					<th>Subject</th>
+					<th>Created</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="email : ${emails}">
+					<td th:text="${email.subject}"></td>
+					<td th:text="${#temporals.format(email.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+					<td>
+						<form th:action="@{'/delete/' + ${email.id}}" method="post">
+							<button type="submit">Delete</button>
+						</form>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</section>
+</body>
+</html>
